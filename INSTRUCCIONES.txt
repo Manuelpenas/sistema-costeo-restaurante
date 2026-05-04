@@ -1,0 +1,42 @@
+INSTRUCCIONES PARA DESPLIEGUE
+
+1. CREAR REPOSITORIO EN GITHUB:
+   Ve a: https://github.com/new
+   - Nombre: sistema-costeo-restaurante
+   - Público
+   - Sin README
+   - Haz clic en "Create repository"
+
+2. CONFIGURAR GIT Y SUBIR:
+   Abre PowerShell y ejecuta:
+   cd "D:\DNAmic\DNAmic\Clientes\Katia\Restaurante"
+   git remote remove origin
+   git remote add origin https://TU_USUARIO:TU_TOKEN@github.com/mapen/sistema-costeo-restaurante.git
+   git push -u origin master
+
+3. DESPLEGAR EN VERCEL:
+   Ve a: https://vercel.com/new
+   - Importa el repositorio "sistema-costeo-restaurante"
+   - Vercel detectará automáticamente que es HTML/CSS/JS
+   - Haz clic en "Deploy"
+   - URL esperada: https://sistema-costeo-restaurante.vercel.app
+
+4. CARACTERÍSTICAS DEL SISTEMA:
+   ✅ Insumos (antes Ingredientes): Registro con precio automático
+   ✅ Sub Recetas: Selecciona insumos, calcula costo automático
+   ✅ Recetas: Selecciona insumos + sub recetas, calcula costo total
+   ✅ Costos Fijos: Registro mensual, calcula costo por plato
+   ✅ Costos: Selecciona receta, ve desglose con margen de ganancia
+   ✅ Configuración: Cambia colores, logo y favicon
+   ✅ Conversión de unidades: 1L leche S/.5.00 → 100ml = S/.0.50
+   ✅ Responsive: Optimizado para celular
+
+5. PROBAR LOCALMENTE:
+   - El servidor ya está corriendo en: http://localhost:3001
+   - Abre en tu navegador
+   - Ve a "Insumos" → Registra: "Leche", 1 litro, S/.5.00
+   - Ve a "Sub Recetas" → Crea "Salsa", agrega insumo "Leche" 0.5L
+   - Ve a "Recetas" → Crea "Café", agrega insumo "Leche" 0.1L → Verás S/.0.50
+   - Ve a "Costos" → Selecciona "Café" → Verás desglose completo
+
+¡EL SISTEMA ESTÁ 100% FUNCIONAL!

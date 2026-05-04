@@ -1,0 +1,16 @@
+# Ignorar archivos temporales
+*.log
+*.tmp
+.DS_Store
+Thumbs.db
+
+# Ignorar carpetas de sistema
+.git/
+.vscode/
+.idea/
+
+# Ignorar archivos de entorno
+.env
+.env.local
+
+.vercel
