@@ -18,6 +18,22 @@ if (medidas.length === 0) {
     ];
     localStorage.setItem('medidas', JSON.stringify(medidas));
 }
+
+let categoriasInsumos = JSON.parse(localStorage.getItem('categoriasInsumos')) || ['Carnes', 'Vegetales', 'Lácteos', 'Cereales', 'Condimentos', 'Bebidas', 'Otros'];
+
+function cargarCategoriasInsumos() {
+    const select = document.getElementById('categoria-insumo');
+    if (!select) return;
+    const selectedValue = select.value;
+    select.innerHTML = '<option value="">Seleccionar...</option>';
+    categoriasInsumos.forEach(cat => {
+        const option = document.createElement('option');
+        option.value = cat;
+        option.textContent = cat;
+        select.appendChild(option);
+    });
+    select.value = selectedValue;
+}
 let insumos = JSON.parse(localStorage.getItem('insumos')) || [];
 let subRecetas = JSON.parse(localStorage.getItem('subRecetas')) || [];
 let recetas = JSON.parse(localStorage.getItem('recetas')) || [];
