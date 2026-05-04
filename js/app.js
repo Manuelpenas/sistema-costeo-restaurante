@@ -2,14 +2,19 @@
 console.log('Iniciando Sistema de Costeo...');
 
 // Variables globales
-let medidas = JSON.parse(localStorage.getItem('medidas'));
-if (!medidas || medidas.length === 0) {
+let medidas = [];
+try {
+    medidas = JSON.parse(localStorage.getItem('medidas')) || [];
+} catch(e) {
+    medidas = [];
+}
+if (medidas.length === 0) {
     medidas = [
-        { id: 1, nombre: 'gramo', abreviatura: 'g', equivalencia: 1, unidadBase: 'g' },
-        { id: 2, nombre: 'kilogramo', abreviatura: 'kg', equivalencia: 1000, unidadBase: 'g' },
-        { id: 3, nombre: 'mililitro', abreviatura: 'ml', equivalencia: 1, unidadBase: 'ml' },
-        { id: 4, nombre: 'litro', abreviatura: 'l', equivalencia: 1000, unidadBase: 'ml' },
-        { id: 5, nombre: 'unidad', abreviatura: 'unidad', equivalencia: 1, unidadBase: 'unidad' }
+        { id: Date.now(), nombre: 'gramo', abreviatura: 'g', equivalencia: 1, unidadBase: 'g' },
+        { id: Date.now() + 1, nombre: 'kilogramo', abreviatura: 'kg', equivalencia: 1000, unidadBase: 'g' },
+        { id: Date.now() + 2, nombre: 'mililitro', abreviatura: 'ml', equivalencia: 1, unidadBase: 'ml' },
+        { id: Date.now() + 3, nombre: 'litro', abreviatura: 'l', equivalencia: 1000, unidadBase: 'ml' },
+        { id: Date.now() + 4, nombre: 'unidad', abreviatura: 'unidad', equivalencia: 1, unidadBase: 'unidad' }
     ];
     localStorage.setItem('medidas', JSON.stringify(medidas));
 }
@@ -107,18 +112,21 @@ function initFormMedida() {
 
 function cargarMedidas() {
     const tbody = document.querySelector('#tabla-medidas tbody');
-    if (!tbody) return;
+    if (!tbody) {
+        console.error('No se encontró tbody de medidas');
+        return;
+    }
     tbody.innerHTML = '';
+    
     medidas.forEach(m => {
         const tr = document.createElement('tr');
-        const isEditing = editingMedidaId === m.id;
         tr.innerHTML = `
-            <td>${m.nombre}</td>
-            <td>${m.abreviatura}</td>
-            <td>${m.equivalencia}</td>
-            <td>${m.unidadBase}</td>
+            <td>${m.nombre || '-'}</td>
+            <td>${m.abreviatura || '-'}</td>
+            <td>${m.equivalencia || 0}</td>
+            <td>${m.unidadBase || '-'}</td>
             <td>
-                <button class="btn-secondary" style="padding:6px 10px;font-size:11px;margin-right:5px;" onclick="editarMedida(${m.id})">${isEditing ? 'Editando...' : 'Editar'}</button>
+                <button class="btn-secondary" style="padding:6px 10px;font-size:11px;margin-right:5px;" onclick="editarMedida(${m.id})">${editingMedidaId === m.id ? 'Editando...' : 'Editar'}</button>
                 <button class="btn-remove" onclick="eliminarMedida(${m.id})">X</button>
             </td>
         `;
