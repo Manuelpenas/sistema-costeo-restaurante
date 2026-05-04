@@ -2,13 +2,17 @@
 console.log('Iniciando Sistema de Costeo...');
 
 // Variables globales
-let medidas = JSON.parse(localStorage.getItem('medidas')) || [
-    { id: 1, nombre: 'gramo', abreviatura: 'g', equivalencia: 1, unidadBase: 'g' },
-    { id: 2, nombre: 'kilogramo', abreviatura: 'kg', equivalencia: 1000, unidadBase: 'g' },
-    { id: 3, nombre: 'mililitro', abreviatura: 'ml', equivalencia: 1, unidadBase: 'ml' },
-    { id: 4, nombre: 'litro', abreviatura: 'l', equivalencia: 1000, unidadBase: 'ml' },
-    { id: 5, nombre: 'unidad', abreviatura: 'unidad', equivalencia: 1, unidadBase: 'unidad' }
-];
+let medidas = JSON.parse(localStorage.getItem('medidas'));
+if (!medidas || medidas.length === 0) {
+    medidas = [
+        { id: 1, nombre: 'gramo', abreviatura: 'g', equivalencia: 1, unidadBase: 'g' },
+        { id: 2, nombre: 'kilogramo', abreviatura: 'kg', equivalencia: 1000, unidadBase: 'g' },
+        { id: 3, nombre: 'mililitro', abreviatura: 'ml', equivalencia: 1, unidadBase: 'ml' },
+        { id: 4, nombre: 'litro', abreviatura: 'l', equivalencia: 1000, unidadBase: 'ml' },
+        { id: 5, nombre: 'unidad', abreviatura: 'unidad', equivalencia: 1, unidadBase: 'unidad' }
+    ];
+    localStorage.setItem('medidas', JSON.stringify(medidas));
+}
 let insumos = JSON.parse(localStorage.getItem('insumos')) || [];
 let subRecetas = JSON.parse(localStorage.getItem('subRecetas')) || [];
 let recetas = JSON.parse(localStorage.getItem('recetas')) || [];
