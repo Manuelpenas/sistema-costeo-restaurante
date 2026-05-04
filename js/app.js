@@ -857,10 +857,25 @@ function eliminarCostoFijo(id) {
 
 // ==================== ACTUALIZAR SELECTORES ====================
 function actualizarSelectores() {
+    actualizarSelectoresUnidadesInsumos();
     actualizarSelectoresInsumos();
     actualizarSelectoresSubRecetas();
     actualizarSelectoresRecetas();
     actualizarSelectoresCostosFijos();
+}
+
+function actualizarSelectoresUnidadesInsumos() {
+    const select = document.getElementById('unidad-insumo');
+    if (!select) return;
+    const selectedValue = select.value;
+    select.innerHTML = '<option value="">Seleccionar...</option>';
+    medidas.forEach(m => {
+        const option = document.createElement('option');
+        option.value = m.abreviatura;
+        option.textContent = m.nombre + ' (' + m.abreviatura + ')';
+        select.appendChild(option);
+    });
+    select.value = selectedValue;
 }
 
 function actualizarSelectoresInsumos() {
