@@ -21,6 +21,8 @@ if (medidas.length === 0) {
 
 let categoriasInsumos = JSON.parse(localStorage.getItem('categoriasInsumos')) || ['Carnes', 'Vegetales', 'Lácteos', 'Cereales', 'Condimentos', 'Bebidas', 'Otros'];
 
+let mermas = JSON.parse(localStorage.getItem('mermas')) || [];
+
 function cargarCategoriasInsumos() {
     const select = document.getElementById('categoria-insumo');
     if (!select) return;
@@ -334,10 +336,67 @@ function calcularCostoInsumosSub(insumosSub) {
     insumosSub.forEach(item => {
         const insumo = insumos.find(i => i.id === item.insumoId);
         if (insumo) {
-            total += item.cantidad * insumo.precioUnitario;
+            const unidadUso = item.unidadUso || insumo.unidad;
+            let cantidadConvertida = item.cantidad;
+            
+            if (unidadUso !== insumo.unidad) {
+                cantidadConvertida = convertirUnidad(item.cantidad, unidadUso, insumo.unidad);
+            }
+            
+            total += cantidadConvertida * insumo.precioUnitario;
         }
     });
     return total;
+}
+
+function actualizarUnidadInsumoSub(select) {
+    const insumoId = parseInt(select.value);
+    const row = select.closest('.insumo-row');
+    const unidadSelect = row.querySelector('.unidad-uso-sub');
+    const insumo = insumos.find(i => i.id === insumoId);
+    
+    if (insumo && unidadSelect) {
+        unidadSelect.innerHTML = '<option value="">Unidad...</option>';
+        unidadSelect.innerHTML += `<option value="${insumo.unidad}">${insumo.unidad}</option>`;
+        
+        if (insumo.unidad === 'kg') unidadSelect.innerHTML += '<option value="g">g</option>';
+        if (insumo.unidad === 'g') unidadSelect.innerHTML += '<option value="kg">kg</option>';
+        if (insumo.unidad === 'l') unidadSelect.innerHTML += '<option value="ml">ml</option>';
+        if (insumo.unidad === 'ml') unidadSelect.innerHTML += '<option value="l">l</option>';
+    }
+    calcularCostoInsumoSub(select);
+}
+
+function calcularCostoInsumoSub(select) {
+    const row = select.closest('.insumo-row');
+    const insumoId = parseInt(row.querySelector('.select-insumo-sub').value);
+    const cantidadInput = row.querySelector('.cantidad-insumo-sub');
+    const unidadSelect = row.querySelector('.unidad-uso-sub');
+    const costoSpan = row.querySelector('.costo-insumo-sub');
+    
+    const insumo = insumos.find(i => i.id === insumoId);
+    if (insumo && cantidadInput && costoSpan) {
+        let cantidad = parseFloat(cantidadInput.value) || 0;
+        const unidadUso = unidadSelect ? unidadSelect.value : insumo.unidad;
+        
+        if (unidadUso && unidadUso !== insumo.unidad) {
+            cantidad = convertirUnidad(cantidad, unidadUso, insumo.unidad);
+        }
+        
+        const costo = cantidad * insumo.precioUnitario;
+        costoSpan.textContent = 'S/. ' + costo.toFixed(2);
+    }
+    calcularCostoSubReceta();
+}
+
+function convertirUnidad(cantidad, desde, hasta) {
+    const equivalencias = {
+        'kg-g': 1000, 'g-kg': 0.001,
+        'l-ml': 1000, 'ml-l': 0.001,
+        'kg-l': 1000, 'l-kg': 1000
+    };
+    const key = `${desde}-${hasta}`;
+    return cantidad * (equivalencias[key] || 1);
 }
 
 function cargarSubRecetas() {
@@ -773,8 +832,51 @@ function initFormCostoFijo() {
         form.reset();
         cargarCostosFijos();
         actualizarSelectoresCostosFijos();
+        actualizarSelectoresCostosFijosReceta();
         alert('Costo fijo guardado');
     });
+}
+
+// ==================== MERMA ====================
+function initFormMerma() {
+    const form = document.getElementById('form-merma');
+    if (!form) return;
+    form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        const nombre = document.getElementById('nombre-merma').value.trim();
+        if (!nombre) return;
+        mermas.push({ id: Date.now(), nombre });
+        guardarDatos();
+        form.reset();
+        cargarMermas();
+        alert('Merma guardada');
+    });
+}
+
+function cargarMermas() {
+    const tbody = document.querySelector('#tabla-mermas tbody');
+    if (!tbody) return;
+    tbody.innerHTML = '';
+    if (mermas.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="2" style="text-align:center; padding:20px; color:#999;">No hay mermas registradas</td></tr>';
+        return;
+    }
+    mermas.forEach(m => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+            <td>${m.nombre}</td>
+            <td><button class="btn-remove" onclick="eliminarMerma(${m.id})">X</button></td>
+        `;
+        tbody.appendChild(tr);
+    });
+}
+
+function eliminarMerma(id) {
+    if (confirm('¿Eliminar merma?')) {
+        mermas = mermas.filter(m => m.id !== id);
+        guardarDatos();
+        cargarMermas();
+    }
 }
 
 function calcularCostos() {

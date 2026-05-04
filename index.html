@@ -140,32 +140,34 @@
                 </div>
             </section>
 
-            <!-- SUB RECETAS -->
-            <section id="sub-recetas" class="tab-content">
-                <h2>Registro de Sub Recetas</h2>
-                <form id="form-sub-receta">
-                    <div class="form-group">
-                        <label>Nombre de la Sub Receta</label>
-                        <input type="text" id="nombre-sub-receta" required>
-                    </div>
-                    <h3>Insumos de la Sub Receta</h3>
-                    <div id="insumos-sub-receta">
-                        <div class="insumo-row">
-                            <select class="select-insumo-sub" required>
-                                <option value="">Seleccionar insumo...</option>
-                            </select>
-                            <input type="number" class="cantidad-insumo-sub" placeholder="Cantidad" step="0.01" required oninput="calcularCostoSubReceta()">
-                            <span class="unidad-insumo-sub">-</span>
-                            <span class="costo-insumo-sub">S/. 0.00</span>
-                            <button type="button" class="btn-remove" onclick="eliminarInsumoSub(this)">X</button>
-                        </div>
-                    </div>
-                    <button type="button" class="btn-secondary" onclick="agregarInsumoSub()">+ Agregar Insumo</button>
-                    <div class="costo-total-plato">
-                        <strong>Costo Total: S/. <span id="costo-total-sub-receta">0.00</span></strong>
-                    </div>
-                    <button type="submit" class="btn-primary">Guardar Sub Receta</button>
-                </form>
+             <!-- SUB RECETAS -->
+             <section id="sub-recetas" class="tab-content">
+                 <h2>Registro de Sub Recetas</h2>
+                 <form id="form-sub-receta">
+                     <div class="form-group">
+                         <label>Nombre de la Sub Receta</label>
+                         <input type="text" id="nombre-sub-receta" required>
+                     </div>
+                     <h3>Insumos de la Sub Receta</h3>
+                     <div id="insumos-sub-receta">
+                         <div class="insumo-row">
+                             <select class="select-insumo-sub" onchange="actualizarUnidadInsumoSub(this)">
+                                 <option value="">Seleccionar insumo...</option>
+                             </select>
+                             <input type="number" class="cantidad-insumo-sub" placeholder="Cantidad" step="0.01" oninput="calcularCostoInsumoSub(this)">
+                             <select class="unidad-uso-sub" onchange="calcularCostoInsumoSub(this)">
+                                 <option value="">Unidad...</option>
+                             </select>
+                             <span class="costo-insumo-sub">S/. 0.00</span>
+                             <button type="button" class="btn-remove" onclick="eliminarInsumoSub(this)">X</button>
+                         </div>
+                     </div>
+                     <button type="button" class="btn-secondary" onclick="agregarInsumoSub()">+ Agregar Insumo</button>
+                     <div class="costo-total-plato">
+                         <strong>Costo Total: S/. <span id="costo-total-sub-receta">0.00</span></strong>
+                     </div>
+                     <button type="submit" class="btn-primary">Guardar Sub Receta</button>
+                 </form>
                 <div class="table-container">
                     <h3>Lista de Sub Recetas</h3>
                     <table id="tabla-sub-recetas">
@@ -181,47 +183,58 @@
                 </div>
             </section>
 
-            <!-- RECETAS -->
-            <section id="recetas" class="tab-content">
-                <h2>Registro de Recetas</h2>
-                <form id="form-receta">
-                    <div class="form-group">
-                        <label>Nombre de la Receta</label>
-                        <input type="text" id="nombre-receta" required>
-                    </div>
-                    <h3>Insumos</h3>
-                    <div id="insumos-receta">
-                        <div class="insumo-row">
-                            <select class="select-insumo-receta" required onchange="actualizarUnidadInsumoReceta(this)">
-                                <option value="">Seleccionar insumo...</option>
-                            </select>
-                            <input type="number" class="cantidad-insumo-receta" placeholder="Cantidad" step="0.01" required oninput="calcularCostoReceta()">
-                            <select class="unidad-uso-receta" onchange="calcularCostoReceta()">
-                                <option value="">Unidad...</option>
-                            </select>
-                            <span class="stock-insumo-receta">Stock: -</span>
-                            <span class="costo-insumo-receta">S/. 0.00</span>
-                            <button type="button" class="btn-remove" onclick="eliminarInsumoRecetaRow(this)">X</button>
-                        </div>
-                    </div>
-                    <button type="button" class="btn-secondary" onclick="agregarInsumoReceta()">+ Agregar Insumo</button>
-                    <h3>Sub Recetas</h3>
-                    <div id="sub-recetas-receta">
-                        <div class="sub-receta-row">
-                            <select class="select-sub-receta-receta" onchange="actualizarCostoSubRecetaSelect(this)">
-                                <option value="">Seleccionar sub receta...</option>
-                            </select>
-                            <input type="number" class="cantidad-sub-receta" placeholder="Cantidad" step="0.01" oninput="calcularCostoReceta()">
-                            <span class="costo-sub-receta">S/. 0.00</span>
-                            <button type="button" class="btn-remove" onclick="eliminarSubRecetaRecetaRow(this)">X</button>
-                        </div>
-                    </div>
-                    <button type="button" class="btn-secondary" onclick="agregarSubRecetaReceta()">+ Agregar Sub Receta</button>
-                    <div class="costo-total-plato">
-                        <strong>Costo Total de la Receta: S/. <span id="costo-total-receta">0.00</span></strong>
-                    </div>
-                    <button type="submit" class="btn-primary">Guardar Receta</button>
-                </form>
+             <!-- RECETAS -->
+             <section id="recetas" class="tab-content">
+                 <h2>Registro de Recetas</h2>
+                 <form id="form-receta">
+                     <div class="form-group">
+                         <label>Nombre de la Receta</label>
+                         <input type="text" id="nombre-receta" required>
+                     </div>
+                     <h3>Insumos</h3>
+                     <div id="insumos-receta">
+                         <div class="insumo-row">
+                             <select class="select-insumo-receta" required onchange="actualizarUnidadInsumoReceta(this)">
+                                 <option value="">Seleccionar insumo...</option>
+                             </select>
+                             <input type="number" class="cantidad-insumo-receta" placeholder="Cantidad" step="0.01" required oninput="calcularCostoReceta()">
+                             <select class="unidad-uso-receta" onchange="calcularCostoReceta()">
+                                 <option value="">Unidad...</option>
+                             </select>
+                             <span class="stock-insumo-receta">Stock: -</span>
+                             <span class="costo-insumo-receta">S/. 0.00</span>
+                             <button type="button" class="btn-remove" onclick="eliminarInsumoRecetaRow(this)">X</button>
+                         </div>
+                     </div>
+                     <button type="button" class="btn-secondary" onclick="agregarInsumoReceta()">+ Agregar Insumo</button>
+                     <h3>Sub Recetas</h3>
+                     <div id="sub-recetas-receta">
+                         <div class="sub-receta-row">
+                             <select class="select-sub-receta-receta" onchange="actualizarCostoSubRecetaSelect(this)">
+                                 <option value="">Seleccionar sub receta...</option>
+                             </select>
+                             <input type="number" class="cantidad-sub-receta" placeholder="Cantidad" step="0.01" oninput="calcularCostoReceta()">
+                             <span class="costo-sub-receta">S/. 0.00</span>
+                             <button type="button" class="btn-remove" onclick="eliminarSubRecetaRecetaRow(this)">X</button>
+                         </div>
+                     </div>
+                     <button type="button" class="btn-secondary" onclick="agregarSubRecetaReceta()">+ Agregar Sub Receta</button>
+                     <h3>Costos Fijos del Plato</h3>
+                     <div id="costos-fijos-receta">
+                         <div class="costo-fijo-row">
+                             <select class="select-costo-fijo-receta" onchange="calcularCostoReceta()">
+                                 <option value="">Seleccionar costo fijo...</option>
+                             </select>
+                             <span class="costo-fijo-plato">S/. 0.00</span>
+                             <button type="button" class="btn-remove" onclick="eliminarCostoFijoRecetaRow(this)">X</button>
+                         </div>
+                     </div>
+                     <button type="button" class="btn-secondary" onclick="agregarCostoFijoReceta()">+ Agregar Costo Fijo</button>
+                     <div class="costo-total-plato">
+                         <strong>Costo Total (Insumos + Sub Recetas + Costos Fijos): S/. <span id="costo-total-receta">0.00</span></strong>
+                     </div>
+                     <button type="submit" class="btn-primary">Guardar Receta</button>
+                 </form>
                 <div class="table-container">
                     <h3>Lista de Recetas</h3>
                     <table id="tabla-recetas">
@@ -294,56 +307,82 @@
                 </div>
             </section>
 
-            <!-- COSTOS FIJOS -->
-            <section id="costos-fijos" class="tab-content">
-                <h2>Costos Fijos Mensuales</h2>
-                <form id="form-costo-fijo">
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label>Concepto</label>
-                            <select id="concepto-costo-fijo" required>
-                                <option value="">Seleccionar...</option>
-                                <option value="Agua">Agua</option>
-                                <option value="Luz">Luz</option>
-                                <option value="Meseros">Meseros</option>
-                                <option value="Cocina">Cocina</option>
-                                <option value="Otro">Otro</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label>Monto Mensual (S/.)</label>
-                            <input type="number" id="monto-costo-fijo" step="0.01" required>
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label>Total Platos Vendidos</label>
-                            <input type="number" id="total-platos-vendidos" value="1000" min="1">
-                        </div>
-                    </div>
-                    <button type="submit" class="btn-primary">Guardar Costo Fijo</button>
-                </form>
-                <div class="table-container">
-                    <h3>Lista de Costos Fijos</h3>
-                    <table id="tabla-costos-fijos">
-                        <thead>
-                            <tr>
-                                <th>Concepto</th>
-                                <th>Monto</th>
-                                <th>Costo/Plato</th>
-                                <th>Acciones</th>
-                            </tr>
-                        </thead>
-                        <tbody></tbody>
-                    </table>
-                    <div class="resumen-costos">
-                        <div class="costo-item total">
-                            <span>Total Mensual:</span>
-                            <span id="total-costos-fijos">S/. 0.00</span>
-                        </div>
-                    </div>
-                </div>
-            </section>
+             <!-- COSTOS FIJOS -->
+             <section id="costos-fijos" class="tab-content">
+                 <h2>Costos Fijos Mensuales</h2>
+                 <form id="form-costo-fijo">
+                     <div class="form-row">
+                         <div class="form-group">
+                             <label>Concepto</label>
+                             <select id="concepto-costo-fijo" required>
+                                 <option value="">Seleccionar...</option>
+                                 <option value="Agua">Agua</option>
+                                 <option value="Luz">Luz</option>
+                                 <option value="Meseros">Meseros</option>
+                                 <option value="Cocina">Cocina</option>
+                                 <option value="Otro">Otro</option>
+                             </select>
+                         </div>
+                         <div class="form-group">
+                             <label>Monto Mensual (S/.)</label>
+                             <input type="number" id="monto-costo-fijo" step="0.01" required>
+                         </div>
+                     </div>
+                     <div class="form-row">
+                         <div class="form-group">
+                             <label>Total Platos Vendidos</label>
+                             <input type="number" id="total-platos-vendidos" value="1000" min="1">
+                         </div>
+                     </div>
+                     <button type="submit" class="btn-primary">Guardar Costo Fijo</button>
+                 </form>
+                 <div class="table-container">
+                     <h3>Lista de Costos Fijos</h3>
+                     <table id="tabla-costos-fijos">
+                         <thead>
+                             <tr>
+                                 <th>Concepto</th>
+                                 <th>Monto</th>
+                                 <th>Costo/Plato</th>
+                                 <th>Acciones</th>
+                             </tr>
+                         </thead>
+                         <tbody></tbody>
+                     </table>
+                     <div class="resumen-costos">
+                         <div class="costo-item total">
+                             <span>Total Mensual:</span>
+                             <span id="total-costos-fijos">S/. 0.00</span>
+                         </div>
+                     </div>
+                 </div>
+             </section>
+
+             <!-- MERMA -->
+             <section id="merma" class="tab-content">
+                 <h2>Registro de Merma</h2>
+                 <form id="form-merma">
+                     <div class="form-row">
+                         <div class="form-group">
+                             <label>Nombre</label>
+                             <input type="text" id="nombre-merma" required placeholder="Ej: Merma de tomate">
+                         </div>
+                     </div>
+                     <button type="submit" class="btn-primary">Guardar Merma</button>
+                 </form>
+                 <div class="table-container">
+                     <h3>Lista de Mermas</h3>
+                     <table id="tabla-mermas">
+                         <thead>
+                             <tr>
+                                 <th>Nombre</th>
+                                 <th>Acciones</th>
+                             </tr>
+                         </thead>
+                         <tbody></tbody>
+                     </table>
+                 </div>
+             </section>
 
             <!-- CONFIGURACIÓN -->
             <section id="configuracion" class="tab-content">
