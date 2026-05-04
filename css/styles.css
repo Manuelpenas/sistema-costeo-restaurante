@@ -13,35 +13,61 @@ body {
 
 @media (max-width: 768px) {
     .container {
-        margin: 10px auto;
+        margin: 5px auto;
         border-radius: 8px;
+        max-width: 100%;
     }
     
     header {
-        padding: 15px;
+        padding: 10px;
+    }
+    
+    .header-content {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
     }
     
     header h1 {
-        font-size: 20px;
-        margin-bottom: 15px;
+        font-size: 18px;
+        margin-bottom: 10px;
     }
     
     nav {
-        flex-direction: column;
+        display: flex;
+        overflow-x: auto;
         gap: 5px;
+        padding-bottom: 5px;
+        -webkit-overflow-scrolling: touch;
+    }
+    
+    nav::-webkit-scrollbar {
+        height: 4px;
+    }
+    
+    nav::-webkit-scrollbar-thumb {
+        background: rgba(255,255,255,0.3);
+        border-radius: 2px;
     }
     
     .tab-btn {
-        padding: 10px;
-        font-size: 13px;
+        padding: 8px 12px;
+        font-size: 12px;
+        white-space: nowrap;
+        flex-shrink: 0;
     }
     
     main {
-        padding: 15px;
+        padding: 10px;
     }
     
     h2 {
-        font-size: 20px;
+        font-size: 18px;
+        margin-bottom: 15px;
+    }
+    
+    h3 {
+        font-size: 16px;
     }
     
     .form-row {
@@ -49,14 +75,35 @@ body {
         gap: 10px;
     }
     
-    .ingrediente-row, .sub-ingrediente-row, .costo-fijo-row {
+    .form-group {
+        width: 100%;
+    }
+    
+    input, select {
+        padding: 10px;
+        font-size: 14px;
+    }
+    
+    .insumo-row, .sub-receta-row {
         flex-direction: column;
         align-items: stretch;
         gap: 8px;
+        padding: 10px;
+    }
+    
+    .insumo-row select, .insumo-row input,
+    .sub-receta-row select, .sub-receta-row input {
+        width: 100%;
+    }
+    
+    .table-container {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
     }
     
     table {
         font-size: 12px;
+        min-width: 600px;
     }
     
     th, td {
@@ -67,8 +114,27 @@ body {
         padding: 15px;
     }
     
+    .costo-item {
+        font-size: 14px;
+    }
+    
     .costo-item.final {
         font-size: 20px;
+    }
+    
+    .costo-total-plato {
+        font-size: 16px;
+        padding: 15px;
+    }
+    
+    button {
+        padding: 10px 16px;
+        font-size: 13px;
+    }
+    
+    .btn-remove {
+        padding: 6px 10px;
+        font-size: 11px;
     }
 }
 
