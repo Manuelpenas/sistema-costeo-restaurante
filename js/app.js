@@ -891,7 +891,7 @@ function actualizarSelectoresUnidadesInsumos() {
 }
 
 function actualizarSelectoresInsumos() {
-    const selects = document.querySelectorAll('.select-insumo, #categoria-insumo');
+    const selects = document.querySelectorAll('.select-insumo-sub, .select-insumo-receta');
     selects.forEach(select => {
         const selectedValue = select.value;
         select.innerHTML = '<option value="">Seleccionar insumo...</option>';
